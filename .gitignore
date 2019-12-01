@@ -1,0 +1,9 @@
+mvnw
+/.mvn
+*.cmd
+/target
+egg-chat.iml
+#只提交src目录下的文件 和pom文件
+!pom.xml
+
+
