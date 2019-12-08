@@ -31,7 +31,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 //配置接口类所在包
-                .apis(RequestHandlerSelectors.basePackage("com.tqq.eggchat.controll"))
+                .apis(RequestHandlerSelectors.basePackage("com.tqq.eggchat.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
