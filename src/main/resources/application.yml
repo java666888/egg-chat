@@ -2,8 +2,8 @@ server:
   port: 8081
 spring:
   datasource:
-    data-username: root
-    data-password: 123456
+    username: root
+    password: 123456
     url: jdbc:mysql://localhost:3306/eggchat?characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
   security:
@@ -15,3 +15,7 @@ spring:
 jwt:
   secret: tanqingquan
   validity: 60
+#mybatis-plus配置控制台打印完整带参数SQL语句
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

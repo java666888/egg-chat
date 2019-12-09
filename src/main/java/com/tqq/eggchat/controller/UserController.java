@@ -22,8 +22,8 @@ public class UserController {
 
 
     @GetMapping("/userLogin")
-    public ResponseResult userLogin(@RequestBody String userName,String passWord ){
-        String token = userService.userLogin(userName, passWord);
+    public ResponseResult userLogin(User user){
+        String token = userService.userLogin(user.getS_account(),user.getS_password());
         return StrUtil.isNotBlank(token)?ResponseResult.success(token):ResponseResult.failure(ResponseCodeEnum.USER_LOGIN_ERROR);
     }
 

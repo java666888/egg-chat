@@ -5,10 +5,12 @@ import com.tqq.eggchat.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -52,7 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //登录和注册所有人可以访问
-                .authorizeRequests().antMatchers("/login","/register").permitAll()
+                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister").permitAll()
+                //放行swagger2
+                .antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 //所有请求需要认证
                 .anyRequest().authenticated()
                 .and()
@@ -61,4 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //禁用缓存
         http.headers().cacheControl();
     }
+
+
 }
