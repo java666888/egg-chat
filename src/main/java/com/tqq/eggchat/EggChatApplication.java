@@ -45,9 +45,6 @@ public class EggChatApplication {
     }
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 
 }

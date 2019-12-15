@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/eggchat?characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    url: jdbc:mysql://localhost:3306/eggchat?characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   security:
     user:

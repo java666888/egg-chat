@@ -5,16 +5,15 @@ import com.tqq.eggchat.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -33,6 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      @Autowired
      private JwtRequestFilter jwtRequestFilter;
 
+     @Autowired
+     private UserLoginFailurceConfig userLoginFailurceConfig;
+
+     @Autowired
+     private UserNotAuthorityConfig userNotAuthorityConfig;
+
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             //配置密码的加密方式
@@ -46,6 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
          //关闭csrf防护器
@@ -54,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //登录和注册所有人可以访问
-                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister").permitAll()
+                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister","/user/demo").permitAll()
                 //放行swagger2
                 .antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 //所有请求需要认证
@@ -64,6 +78,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         //禁用缓存
         http.headers().cacheControl();
+
+        //设置异常处理  authenticationEntryPoint是身份验证失败的处理,accessDeniedHandler是没有权限访问处理
+        http.exceptionHandling().authenticationEntryPoint(userLoginFailurceConfig).accessDeniedHandler(userNotAuthorityConfig);
     }
 
 

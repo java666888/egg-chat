@@ -1,6 +1,7 @@
 package com.tqq.eggchat.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +24,8 @@ public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
 
     //token有效期
-    @Value("{jwt.validity}")
-    private String tokenValidity;
+    @Value("${jwt.validity}")
+    private Long tokenValidity;
 
 
     //加密秘钥
@@ -49,7 +50,7 @@ public class JwtTokenUtil implements Serializable {
 
     //从token中解密 获得用户信息
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     //验证token是否过期
@@ -67,7 +68,7 @@ public class JwtTokenUtil implements Serializable {
     //生成token
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(tokenValidity) * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + (tokenValidity * 1000)))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 

@@ -6,10 +6,17 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@TableName(value = "t_user")
+@TableName(value = "t_user",autoResultMap=true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User implements Serializable {
     /**
      * 主键 用mybatis plus 自动生成19位唯一id

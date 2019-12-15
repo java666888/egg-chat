@@ -1,6 +1,10 @@
 package com.tqq.eggchat.common;
 
+import cn.hutool.core.map.MapUtil;
 import com.tqq.eggchat.common.enums.ResponseCodeEnum;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 统一封装接口返回数据的格式
@@ -26,6 +30,41 @@ public class ResponseResult {
         result.data=data;
         return result;
     }
+
+
+    public static  ResponseResult success(String paramName,Object data){
+        ResponseResult result=new ResponseResult();
+        result.setCodeAndMessage(ResponseCodeEnum.SUCESS);
+        Map<String,Object> resultMap=new HashMap<>(1);
+        resultMap.put(paramName,data);
+        result.data=resultMap;
+        return result;
+    }
+
+
+
+    public static  ResponseResult success(ResponseCodeEnum responseCodeEnum,Object data){
+        ResponseResult result=new ResponseResult();
+        result.setCodeAndMessage(responseCodeEnum);
+        result.data=data;
+        return result;
+    }
+
+    public static  ResponseResult success(ResponseCodeEnum responseCodeEnum){
+        ResponseResult result=new ResponseResult();
+        result.setCodeAndMessage(responseCodeEnum);
+        return result;
+    }
+
+    public static  ResponseResult success(ResponseCodeEnum responseCodeEnum,String paramName,Object data){
+        ResponseResult result=new ResponseResult();
+        result.setCodeAndMessage(responseCodeEnum);
+        Map<String,Object> resultMap=new HashMap<>(1);
+        resultMap.put(paramName,data);
+        result.data=resultMap;
+        return result;
+    }
+
 
     public static  ResponseResult failure(ResponseCodeEnum responseCodeEnum){
         ResponseResult result=new ResponseResult();

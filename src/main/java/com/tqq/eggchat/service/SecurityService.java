@@ -41,7 +41,7 @@ public class SecurityService implements UserDetailsService {
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("s_account", userName));
         if(user!=null){
             //这里暂时没有权限的概念 就默认个user权限
-            return new SecurityUser(user.getS_account(),user.getS_password(), Arrays.asList("user"),user.getI_status()==1?true:false);
+            return new SecurityUser(user.getS_account(),user.getS_password(), Arrays.asList("USER"),user.getI_status()==1?true:false);
         }else{
             log.info("查询数据库,该账号{}不存在",userName);
             throw  new UsernameNotFoundException(String.format("%s 该账号不存在",userName));

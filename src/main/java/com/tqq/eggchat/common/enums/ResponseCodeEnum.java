@@ -9,9 +9,14 @@ public enum ResponseCodeEnum {
     /*通用HTTP状态码 */
     SUCESS(200,"成功"),
 
-    /*用户错误状态码 10000-19999 */
+    /*用户相关状态码 10000-19999 */
     USER_LOGIN_ERROR(10000,"用户名或密码错误"),
-    USER_REGISTER_ERROR(10001,"用户注册失败");
+    USER_REGISTER_ERROR(10001,"注册失败"),
+    USER_TOKEN_ERROR(10002,"token 过期或错误"),
+    USER_NOT_AUTHORITY(10003,"没有权限访问"),
+    USER_LOGIN_SUCCESS(10004,"登录成功"),
+    USER_REGISTER_SUCCESS(10005,"注册成功");
+
 
     private Integer code;
     private  String message;

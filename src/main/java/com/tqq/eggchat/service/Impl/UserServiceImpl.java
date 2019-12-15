@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,18 +46,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String userLogin(String userName, String passWord) {
-        //根据用户名查询用户信息
-        User user = userMapper.selectOne(new QueryWrapper<User>().eq("s_account", userName));
-        if(user!=null){
-            BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-           String  tempPassWord=passwordEncoder.encode(passWord);
-            if(userName.equals(user.getS_account())&&tempPassWord.equals(user.getS_password())){
-                UsernamePasswordAuthenticationToken login=new UsernamePasswordAuthenticationToken(userName,passWord);
-                Authentication authenticate = authenticationManager.authenticate(login);
-                SecurityContextHolder.getContext().setAuthentication(authenticate);
-                return jwtTokenUtil.generateToken(securityService.loadUserByUsername(userName));
-            }
-        }
-        return null;
+        //根据输入的用户名和密码创建一个 用户名密码token
+        UsernamePasswordAuthenticationToken userNamepassWordToken = new UsernamePasswordAuthenticationToken( userName, passWord );
+        //创建认证对象 传入用户名密码token 然后spring security会根据用户名去调用loadUserByUsername方法
+        //这个方法是由我们重写了 是根据用户名去数据库查询 只要查询到记录 交由spring security进行密码比较
+        //如果没有查询到对应记录 或者密码不正确 就会直接响应403  这里后续代码不会执行
+        Authentication authentication = authenticationManager.authenticate(userNamepassWordToken);
+        //执行到这一步 代表用户名密码已经校验成功了 将认证对象写入到spring security上下文环境中
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //根据用户名查询结果 然后生成token 并返回
+        UserDetails userDetails = securityService.loadUserByUsername( userName );
+        return jwtTokenUtil.generateToken(userDetails);
     }
 }
