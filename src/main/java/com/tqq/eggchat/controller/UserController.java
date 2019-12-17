@@ -42,7 +42,6 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/admin")
     public ResponseResult admin(){
-
         return ResponseResult.success("你拥有管理员权限");
     }
 

@@ -1,20 +1,32 @@
 server:
   port: 8081
 spring:
+  #数据库连接信息
   datasource:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/eggchat?characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-  security:
-    user:
-      name: admin
-      password: admin
+  #redis配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: 111.67.192.94
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 123456
+    # 连接超时时间（毫秒）
+    timeout: 2000
+
 # secret 配置加密token的秘钥  代码中通过 @value注解读取即可
 #validity 设置token的有效期   代码中通过 @value注解读取即可 单位秒
 jwt:
   secret: tanqingquan
-  validity: 60
+  validity: 600
+
+
 #mybatis-plus配置控制台打印完整带参数SQL语句
 mybatis-plus:
   configuration:
