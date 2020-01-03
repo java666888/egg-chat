@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @Description: TODO
  * @Author: Tan
@@ -38,10 +40,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userRegister(User user) {
-        BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-        user.setS_password(passwordEncoder.encode(user.getS_password()));
-        userMapper.insert(user);
-        return user;
+        if(user.getS_account()!=null){
+            BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+            user.setS_password(passwordEncoder.encode(user.getS_password()));
+            user.setD_register_date(new Date());
+            int insert = userMapper.insert(user);
+            return insert==1?user:null;
+        }
+        return null;
     }
 
     @Override
@@ -58,4 +64,12 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = securityService.loadUserByUsername( userName );
         return jwtTokenUtil.generateToken(userDetails);
     }
+
+
+    @Override
+    public boolean checkUserAccount(String userName) {
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("s_account", userName));
+        return user==null;
+    }
+
 }

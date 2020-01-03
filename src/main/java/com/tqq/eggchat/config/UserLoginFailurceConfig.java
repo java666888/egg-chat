@@ -26,8 +26,6 @@ public class UserLoginFailurceConfig implements AuthenticationEntryPoint {
         //将自定义响应结果转json字符串 默认是用户名密码错误的提示信息
         String resultJsonString = JSONUtil.toJsonStr(ResponseResult.failure(ResponseCodeEnum.USER_LOGIN_ERROR));
 
-        //设置响应对象状态码
-        httpServletResponse.setStatus(ResponseCodeEnum.USER_LOGIN_ERROR.getCode());
 
         //从请求对象中获取token
         String tokenHead = httpServletRequest.getHeader("Authorization");

@@ -26,4 +26,13 @@ public interface UserService {
      **/
     String userLogin(String userName,String passWord);
 
+    /**
+     * @Description: 检查用户账号是否可用
+     * @Author: Tan
+     * @Date: 2019/12/22
+     * @return: boolean
+     **/
+    boolean checkUserAccount(String userName);
+
+
 }

@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //登录和注册所有人可以访问
-                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister","/user/demo").permitAll()
+                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister","/user/checkUserAccount").permitAll()
                 //放行swagger2
                 .antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 //所有请求需要认证
