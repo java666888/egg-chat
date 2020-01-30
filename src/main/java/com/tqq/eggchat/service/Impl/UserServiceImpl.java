@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * @Description: TODO
+ * @Description: 用户服务类
  * @Author: Tan
  * @CreateDate: 2019/12/8
  **/

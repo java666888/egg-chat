@@ -12,13 +12,14 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址
-    host: 111.67.192.94
+    host: 47.98.217.162
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password: 123456
+    password: egg666
     # 连接超时时间（毫秒）
-    timeout: 2000
+    timeout: 5000
+
 
 # secret 配置加密token的秘钥  代码中通过 @value注解读取即可
 #validity 设置token的有效期   代码中通过 @value注解读取即可 单位秒
@@ -31,3 +32,6 @@ jwt:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #关闭mybatis plus 启动横幅
+  global-config:
+    banner: false
