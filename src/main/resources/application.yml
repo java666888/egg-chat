@@ -24,7 +24,7 @@ spring:
 # secret 配置加密token的秘钥  代码中通过 @value注解读取即可
 #validity 设置token的有效期   代码中通过 @value注解读取即可 单位秒
 jwt:
-  secret: tanqingquan
+  secret: egg666
   validity: 600
 
 
