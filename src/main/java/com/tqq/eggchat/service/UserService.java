@@ -34,5 +34,14 @@ public interface UserService {
      **/
     boolean checkUserAccount(String userName);
 
+    /**
+     * 根据用户名获取头像
+     * @Author: Tan
+     * @Date: 2020/8/30
+     * @param account:
+     * @return: java.lang.String
+     **/
+    String getHeadPortrait(String account);
+
 
 }

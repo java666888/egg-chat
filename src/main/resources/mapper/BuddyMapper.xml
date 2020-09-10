@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tqq.eggchat.dao.BuddyMapper">
+
+<select id="queryBuddyListByUserId" parameterType="java.lang.String" resultType="java.util.Map">
+SELECT a.s_buddy_account,a.s_remarks,b.s_nike_name,b.s_sex,b.s_signature from t_buddy a INNER JOIN t_user b
+on a.s_buddy_account=b.s_account
+WHERE a.s_user_account=#{userId} and b.i_status=1
+</select>
+
+
+
+</mapper>

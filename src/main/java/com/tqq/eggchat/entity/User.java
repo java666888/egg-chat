@@ -78,5 +78,11 @@ public class User implements Serializable {
     @TableField(value = "s_signature")
     private String s_signature;
 
+    /**
+     * 头像
+     */
+    @TableField(value = "s_head_portrait")
+    private String s_head_portrait;
+
     private static final long serialVersionUID = 1L;
 }

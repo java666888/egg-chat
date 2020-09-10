@@ -72,4 +72,19 @@ public class UserServiceImpl implements UserService {
         return user==null;
     }
 
+    /**
+     * 根据用户名获取头像
+     *
+     * @param account :
+     * @Author: Tan
+     * @Date: 2020/8/30
+     * @return: java.lang.String
+     **/
+    @Override
+    public String getHeadPortrait(String account) {
+        User user =  userMapper.selectOne(new QueryWrapper<User>().eq("s_account", account));
+        return user!=null?user.getS_head_portrait():null;
+    }
+
+
 }

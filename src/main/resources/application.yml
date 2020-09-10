@@ -35,3 +35,6 @@ mybatis-plus:
     #关闭mybatis plus 启动横幅
   global-config:
     banner: false
+
+#spring security 允许匿名访问路径  登录注册检查用户是否可用,swagger2页面路径,根据用户账号获取头像
+anonymousPathArray: /user/userLogin,/user/userRegister,/user/userAccount/**,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/user/headPortrait/**

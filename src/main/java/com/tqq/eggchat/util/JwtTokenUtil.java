@@ -38,7 +38,7 @@ public class JwtTokenUtil implements Serializable {
 
     //通过token得到token过期时间
     public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
+            return getClaimFromToken(token, Claims::getExpiration);
     }
 
     //从token中获得用户信息
@@ -49,11 +49,16 @@ public class JwtTokenUtil implements Serializable {
 
     //从token中解密 获得用户信息
     private Claims getAllClaimsFromToken(String token) {
-         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        }catch (Exception e){
+            System.out.println("发生过期异常");
+        }
+        return null;
     }
 
     //验证token是否过期
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }

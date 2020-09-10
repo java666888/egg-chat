@@ -3,6 +3,7 @@ package com.tqq.eggchat.config;
 import com.tqq.eggchat.filter.JwtRequestFilter;
 import com.tqq.eggchat.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      @Autowired
      private UserNotAuthorityConfig userNotAuthorityConfig;
 
+     @Value("${anonymousPathArray}")
+     private String[] anonymousPathArray;
+
 
 
     @Override
@@ -67,10 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  //session管理器为无状态
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                //登录和注册所有人可以访问
-                .authorizeRequests().antMatchers("/user/userLogin","/user/userRegister","/user/checkUserAccount").permitAll()
-                //放行swagger2
-                .antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
+                //设置允许匿名访问路径
+                .authorizeRequests().antMatchers(anonymousPathArray).permitAll()
                 //所有请求需要认证
                 .anyRequest().authenticated()
                 .and()

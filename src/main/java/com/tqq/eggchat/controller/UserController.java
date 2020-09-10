@@ -8,6 +8,7 @@ import com.tqq.eggchat.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,9 +24,9 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation("用户登录")
-    @GetMapping("/userLogin")
-    public ResponseResult userLogin(User user){
-        String token = userService.userLogin(user.getS_account(),user.getS_password());
+    @PostMapping("/userLogin")
+    public ResponseResult userLogin( String s_account, String s_password){
+        String token = userService.userLogin(s_account,s_password);
         return StrUtil.isNotBlank(token)?ResponseResult.success(ResponseCodeEnum.USER_LOGIN_SUCCESS,"token",token):ResponseResult.failure(ResponseCodeEnum.USER_LOGIN_ERROR);
     }
 
@@ -36,14 +37,17 @@ public class UserController {
     }
 
     @ApiOperation("检查用户名是否可用")
-    @GetMapping("/checkUserAccount")
-    public ResponseResult checkUserAccount(String account){
-        return ResponseResult.success("checkUserAccount",userService.checkUserAccount(account));
+    @GetMapping("/userAccount/{s_account}")
+    public ResponseResult checkUserAccount(@PathVariable("s_account") String s_account){
+        return ResponseResult.success("checkUserAccount",userService.checkUserAccount(s_account));
     }
 
-    @GetMapping("/test")
-    public ResponseResult test(){
-        return ResponseResult.success();
+
+    @ApiOperation("根据用户名获取头像")
+    @GetMapping("/headPortrait/{s_account}")
+    public ResponseResult getHeadPortrait(@PathVariable("s_account") String s_account){
+        String headPortrait = userService.getHeadPortrait(s_account);
+        return ResponseResult.success(headPortrait);
     }
 
 

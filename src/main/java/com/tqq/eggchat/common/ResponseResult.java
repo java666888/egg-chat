@@ -1,6 +1,5 @@
 package com.tqq.eggchat.common;
 
-import cn.hutool.core.map.MapUtil;
 import com.tqq.eggchat.common.enums.ResponseCodeEnum;
 
 import java.util.HashMap;
